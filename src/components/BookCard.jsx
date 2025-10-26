@@ -1,17 +1,8 @@
 import { useState } from "react";
 
-function BookCard({ title, price, image, link, onRemove }) {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const toggleSelect = () => {
-    setIsSelected((prev) => !prev);
-  };
-
+function BookCard({ title, price, image, link, author, selected, onClick }) {
   return (
-    <div
-      className={`book-card ${isSelected ? "selected" : ""}`}
-      onClick={toggleSelect}
-    >
+    <div className={`book-card ${selected ? "selected" : ""}`} onClick={onClick}>
       {image && <img src={image} alt={`Cover of ${title}`} />}
 
       <div className="book-details">
@@ -22,23 +13,14 @@ function BookCard({ title, price, image, link, onRemove }) {
           target="_blank"
           rel="noreferrer"
           className="book-link"
-          onClick={(e) => e.stopPropagation()} // prevents toggling when clicking link
+          onClick={(e) => e.stopPropagation()} /* don't toggle when clicking link */
         >
           Learn more
         </a>
       </div>
-
-      <button
-        className="remove-button"
-        onClick={(e) => {
-          e.stopPropagation(); // don’t toggle select when removing
-          onRemove?.();
-        }}
-      >
-        x Remove
-      </button>
     </div>
   );
 }
 
 export default BookCard;
+
